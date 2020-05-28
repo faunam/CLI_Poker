@@ -25,6 +25,7 @@
 import deck_class
 import player_class
 import bet
+from os import system
 
 
 def _init_players(players, num_players):
@@ -35,9 +36,9 @@ def _init_players(players, num_players):
 
 def ante_up(players, ante, pot):
     for player in players:
-        print("Player " + player.id +
-              ". Please press enter to confirm your ante of " + str(ante) + " chips. Press 'D' to decline participation in this round.")
-        if input() == 'd':
+        print("Player " + str(player.id) +
+              ". Please press enter to confirm your ante of " + str(ante) + " chips. Press 'D' + enter to decline participation in this round.")
+        if input().lower() == 'd':
             player.active = False
         else:
             player.bet(ante)
@@ -67,6 +68,7 @@ def discard_and_draw(player, deck):
 def deal(players, deck):
     active_players = [p for p in players if p.active]
     for player in active_players:
+        system('clear')
         print("Player " + str(player.id) + ". Press enter to continue")
         input()
         deal_to_player(player, deck, 5)
@@ -74,7 +76,7 @@ def deal(players, deck):
         if player.id == len(players):
             print("the round is over. press enter to continue to betting.")
         else:
-            print("please pass to next player. press enter to continue.")
+            print("please press enter to clear the screen, then pass to the next player.")
         input()
 
 
@@ -117,6 +119,7 @@ def play_game(num_players):
     deal(players, deck)
 
     # betting round
+    # TODO: clear screen appropriately in betting function
     pot = bet.betting_round(players, ante, pot)
 
     # round end; summary
@@ -124,3 +127,7 @@ def play_game(num_players):
 
 
 play_game(2)
+
+# commit -- fixed a small bug and cleared screen between player turns
+
+# UI feedback: replace at same index, tell player indeces are 1-5

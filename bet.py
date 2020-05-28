@@ -1,8 +1,11 @@
+from os import system
+
 
 def betting_round(players, standing_bet, pot):
     active_players = [player for player in players if player.active]
     queue = active_players.copy()
     while queue:
+        system("clear")
         player = queue.pop(0)
         print("Player " + str(player.id) + ". Press enter to continue")
         input()
@@ -34,4 +37,5 @@ def betting_round(players, standing_bet, pot):
         else:
             print("bad input. please try again")
             queue = [player] + queue
+    system("clear")
     return pot
